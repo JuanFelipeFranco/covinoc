@@ -3,6 +3,10 @@ package com.covinoc.test.web.controller;
 import com.covinoc.test.dominio.Producto;
 import com.covinoc.test.dominio.servicio.ServicioProducto;
 import com.covinoc.test.web.exception.ResourceNotFoundException;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,33 +24,58 @@ public class ControladorProducto {
     private ServicioProducto servicioProducto;
 
     @GetMapping()
+    @ApiOperation(value = "Obtener todos los productos de la tienda")
+    @ApiResponse(code=200, message = "Ok")
     public ResponseEntity<List<Producto>> obtenerProductos(){
         List<Producto> productos = servicioProducto.obtenerProductos();
         return new ResponseEntity<>(productos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable("id") int productoId) {
+    @ApiOperation(value = "Buscar un producto con el ID")
+    @ApiResponses({
+            @ApiResponse(code=200, message = "Ok"),
+            @ApiResponse(code=404, message = "Producto NO encontrado"),
+    })
+    public ResponseEntity<Producto> obtenerProductoPorId(@ApiParam(value = "El id del producto", required = true, example = "7")
+                                                             @PathVariable("id") int productoId) {
         Optional<Producto> producto = servicioProducto.obtenerProductoPorId(productoId);
         return producto.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/categoria/{categoriaId}")
-    public ResponseEntity<List<Producto>> obtenerProductosPorCategoria(@PathVariable("categoriaId") int categoriaId) {
+    @ApiOperation(value = "Obtener los Productos de la tienda por el id de la categoria")
+    @ApiResponses({
+            @ApiResponse(code=200, message = "Ok"),
+            @ApiResponse(code=404, message = "Producto NO encontrado"),
+    })
+    public ResponseEntity<List<Producto>> obtenerProductosPorCategoria(@ApiParam(value = "El id de la categoria", required = true, example = "2")
+            @PathVariable("categoriaId") int categoriaId) {
         Optional<List<Producto>> productos = servicioProducto.obtenerProductosPorCategoria(categoriaId);
         return productos.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/guardar")
+    @ApiOperation(value = "Guardar un producto")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "CREADO"),
+            @ApiResponse(code= 400, message = "Solicitud Incorrecta"),
+    })
     public ResponseEntity<Producto> save(@RequestBody Producto producto) {
         Producto savedProducto = servicioProducto.guardar(producto);
         return new ResponseEntity<>(savedProducto, HttpStatus.CREATED);
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Producto> actualizarProducto(@PathVariable int id, @RequestBody Producto producto) {
+    @ApiOperation(value = "Actualizar un producto por ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK", response = Producto.class),
+            @ApiResponse(code = 404, message = "Producto no encontrado")
+    })
+    public ResponseEntity<Producto> actualizarProducto(@ApiParam(value = "ID del producto a actualizar", required = true)
+            @PathVariable int id, @RequestBody Producto producto) {
         try {
             Producto updatedProducto = servicioProducto.actualizar(id, producto);
             return new ResponseEntity<>(updatedProducto, HttpStatus.OK);
@@ -55,8 +84,15 @@ public class ControladorProducto {
         }
     }
 
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") int productId) {
+    @ApiOperation(value = "Eliminar un producto por el Id")
+    @ApiResponses({
+            @ApiResponse(code=200, message = "Ok"),
+            @ApiResponse(code=404, message = "Producto NO encontrado"),
+    })
+    public ResponseEntity<Void> delete(@ApiParam(value = "El id del producto a eliminar", required = true, example = "6")
+            @PathVariable("id") int productId) {
         boolean deleted = servicioProducto.delete(productId);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
