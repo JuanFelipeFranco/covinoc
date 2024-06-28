@@ -34,8 +34,10 @@ Para utilizar esta API en tu entorno local, sigue estos pasos:
 
 ## Ejemplos de Uso
 ### Obtener Productos
+```http
 GET [http://localhost:8090/tienda/api/productos]
 ### Obtener un Producto
+```http
 GET [http://localhost:8090/tienda/api/productos/1]
 ### Crear un Producto
 ```http
