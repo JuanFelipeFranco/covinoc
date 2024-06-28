@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "c871d7f6-b519-41fc-9b0e-503eb45a2a8f",
+		"name": "Prueba",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23096025"
+	},
+	"item": [
+		{
+			"name": "ObtenerProductos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8090/tienda/api/productos"
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerProductoPorId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8090/tienda/api/productos/1"
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerProductosPorIdCategoria",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8090/tienda/api/productos/categoria/2"
+			},
+			"response": []
+		},
+		{
+			"name": "BorrarProductoId",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8090/tienda/api/productos/delete/51"
+			},
+			"response": []
+		},
+		{
+			"name": "GuardarProducto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"renombre\": \"Lechuga Bataviaa\",\r\n    \"categoriaId\": 1,\r\n    \"precio\": 300.0,\r\n    \"inventario\": 500,\r\n    \"activo\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8090/tienda/api/productos/guardar"
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarProducto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"productoId\": 1,\r\n    \"renombre\": \"Guayaba Feijoa\",\r\n    \"categoriaId\": 1,\r\n    \"precio\": 700.0,\r\n    \"inventario\": 500,\r\n    \"activo\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8090/tienda/api/productos/actualizar/1"
+			},
+			"response": []
+		}
+	]
+}
