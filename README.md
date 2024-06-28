@@ -33,13 +33,7 @@ Para utilizar esta API en tu entorno local, sigue estos pasos:
 4. Accede a la documentación de la API en [Swagger UI](http://localhost:8090/tienda/api/swagger-ui/index.html).
 
 ## Ejemplos de Uso
-### Obtener Productos
-```http
-GET [http://localhost:8090/tienda/api/productos]
-### Obtener un Producto
-```http
-GET [http://localhost:8090/tienda/api/productos/1]
-### Crear un Producto
+
 ```http
 POST [http://localhost:8090/tienda/api/productos/guardar]
 Content-Type: application/json
@@ -51,3 +45,4 @@ Content-Type: application/json
     "inventario": 500,
     "activo": true
 }
+```
