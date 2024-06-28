@@ -21,7 +21,7 @@ DDD es una metodología de diseño de software que estructura el código alreded
 
 ## Documentación de la API
 
-La API está documentada utilizando Swagger, lo que facilita la comprensión de los endpoints disponibles y cómo interactuar con ellos. Puedes acceder a la documentación en [Swagger UI](http://localhost:8090/tienda/api/swagger-ui/index.html)).
+La API está documentada utilizando Swagger, lo que facilita la comprensión de los endpoints disponibles y cómo interactuar con ellos. Puedes acceder a la documentación en [Swagger UI](http://localhost:8090/tienda/api/swagger-ui/index.html).
 
 ## Instalación y Uso
 
@@ -33,16 +33,19 @@ Para utilizar esta API en tu entorno local, sigue estos pasos:
 4. Accede a la documentación de la API en [Swagger UI](http://localhost:8090/tienda/api/swagger-ui/index.html).
 
 ## Ejemplos de Uso
-
+### Obtener Productos
+GET [http://localhost:8090/tienda/api/productos]
+### Obtener un Producto
+GET [http://localhost:8090/tienda/api/productos/1]
 ### Crear un Producto
-
 ```http
-POST /api/productos
+POST [http://localhost:8090/tienda/api/productos/guardar]
 Content-Type: application/json
 
 {
-  "nombre": "Producto Ejemplo",
-  "descripcion": "Descripción del producto.",
-  "precio": 99.99,
-  "categoria": "Electrónica"
+    "renombre": "Lechuga Bataviaa",
+    "categoriaId": 1,
+    "precio": 300.0,
+    "inventario": 500,
+    "activo": true
 }
